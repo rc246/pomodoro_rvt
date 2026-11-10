@@ -4,30 +4,30 @@ export default function App() {
   const [timeLeft, setTimeLeft] = useState(25 * 60);
   const [isRunning, setIsRunning] = useState(false);
 
-  useEffect(() => {
-    let timer = null;
-    if (isRunning && timeLeft > 0) {
-      timer = setInterval(() => setTimeLeft((t) => t - 1), 1000);
-    } else if (timeLeft === 0) {
-      setIsRunning(false);
-    }
-    return () => clearInterval(timer);
-  }, [isRunning, timeLeft]);
-
   // useEffect(() => {
-  //   if (!isRunning || timeLeft <= 0) return;
-
-  //   const timer = setInterval(() => {
-  //     if (timeLeft <= 1) {
-  //       setTimeLeft(0);
-  //       setIsRunning(false);
-  //     } else {
-  //       setTimeLeft((t) => t - 1);
-  //     }
-  //   }, 1000);
-
+  //   let timer = null;
+  //   if (isRunning && timeLeft > 0) {
+  //     timer = setInterval(() => setTimeLeft((t) => t - 1), 1000);
+  //   } else if (timeLeft === 0) {
+  //     setIsRunning(false);
+  //   }
   //   return () => clearInterval(timer);
   // }, [isRunning, timeLeft]);
+
+  useEffect(() => {
+    if (!isRunning || timeLeft <= 0) return;
+
+    const timer = setInterval(() => {
+      if (timeLeft <= 1) {
+        setTimeLeft(0);
+        setIsRunning(false);
+      } else {
+        setTimeLeft((t) => t - 1);
+      }
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [isRunning, timeLeft]);
 
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60)
